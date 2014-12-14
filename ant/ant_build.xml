@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 
+Build script for hangman 
+
+@author Sandra Schneider
+-->
+<project name="hangman_ant" default="all" basedir=".">
+    <!-- define build directory -->
+    <property name="build.dir" value="ant_build"/>
+    
+    <target name="clean">
+        <echo message="clean build in directory ${build.dir}" />
+        <delete dir="${build.dir}" />
+    </target>
+    
+    <target name="compile">
+        <echo message="compile build" />
+        <mkdir dir="${build.dir}/classes" />
+        <javac srcdir="../src" destdir="${build.dir}/classes" includeantruntime="false" />
+    </target>
+
+    <target name="jar">
+        <echo message="project to jar" />
+        <mkdir dir="${build.dir}/jar" />
+        <jar destfile="${build.dir}/jar/Hangman_ant.jar" basedir="${build.dir}/classes">
+            <manifest>
+                <attribute name="Main-Class" value="de.schneidersa.Hangman" />
+            </manifest>
+        </jar>
+    </target>
+    
+    <target name="run">
+        <echo message="run build" />
+        <java jar="${build.dir}/jar/Hangman_ant.jar" fork="true" />        
+    </target>
+    
+    <target name="all">
+        <echo message="Begin building hangman..." />
+        <antcall target="clean" />
+        <antcall target="compile" />
+        <antcall target="jar" />
+        <antcall target="run" />
+    </target>
+</project>
